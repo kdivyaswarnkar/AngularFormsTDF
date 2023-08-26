@@ -1,0 +1,158 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="bg-primary p-3 text-center">
+                <h2>Template Driven Form</h2>
+            </div>
+    
+            <form #newForm="ngForm" (ngSubmit)="save(newForm.value)" novalidate>
+                {{newForm.value|json}}
+                <hr>
+                {{std|json}}
+              <!-- for  Enter text name -->
+                <div class="form-group">
+                    <label for="">Enter Name:</label>
+                    <input type="text" minlength="3" maxlength="15" [class.is-invalid]="name.touched && name.invalid"
+                        required name="name" #name="ngModel" class="form-control" [(ngModel)]="std.name"
+                        placeholder="Enter Name" ngModel>
+                </div>
+                <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+                    <div *ngIf="name.errors && name.errors['required']">
+                        Name is Required!
+                    </div>
+                    <div *ngIf="name.errors && name.errors['minlength']">
+                        3 characters must
+                    </div>
+                </div>
+
+                <!-- Touched {{name.touched}}
+               <br/>
+               UnTouched {{name.untouched}} -->
+                <!-- Valid {{name.valid}}
+               <br/>
+               Invalid {{name.invalid}} -->
+                <!-- Dirty {{name.dirty}}
+               <br/>
+               Pristine {{name.pristine}} -->
+
+               <!-- for  Enter Age  -->
+                <div class="form-group">
+                    <label for="">Enter Age:</label>
+                    <input type="number" [class.is-invalid]="age.touched && age.invalid" required min="10" max="50"
+                        name="age" #age="ngModel" class="form-control" [(ngModel)]="std.age" placeholder="Enter Age"
+                        ngModel>
+                </div>
+                <div class="alert alert-danger" *ngIf="age.touched && age.invalid">
+                    <div *ngIf="age.errors && age.errors['required']">
+                        Age is Required!
+                    </div>
+                    <div *ngIf="age.errors && age.errors['min']">
+                        Age must be greater or equal to 10
+                    </div>
+                    <div *ngIf="age.errors && age.errors['max']">
+                        Age must be lessor or equal to 50
+                    </div>
+                </div>
+               
+                <!-- for  Enter Email -->
+                <div class="form-group">
+                    <label for="">Enter Email:</label>
+                    <input type="text" [class.is-invalid]="mail.touched && mail.invalid" required email name="email"
+                        #mail="ngModel" class="form-control" [(ngModel)]="std.email" placeholder="Enter Email" ngModel>
+                </div>
+                <div class="alert alert-danger" *ngIf="mail.touched && mail.invalid">
+                    <div *ngIf="mail.errors && mail.errors['required']">
+                        Mail is Required!
+                    </div>
+                    <div *ngIf="mail.errors && mail.errors['email']">
+                        <!-- we can use pattern  -->
+                        Invalid EMail !!
+                    </div>
+                </div>
+            
+                <!-- for  password -->
+                <div class="form-group">
+                    <label for="">Enter Password:</label>
+                    <input type="password" [class.is-invalid]="pass.touched && pass.invalid" required
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" name="pass"
+                        #pass="ngModel" class="form-control" [(ngModel)]="std.pass" placeholder="Enter password"
+                        ngModel>
+                </div>
+                <div class="alert alert-danger" *ngIf="pass.touched && pass.invalid">
+                    <div *ngIf="pass.errors && pass.errors['required']">
+                        Password is Required!
+                    </div>
+                    <div *ngIf="pass.errors && pass.errors['pattern']">
+                        <!-- we can use pattern  -->
+                        Invalid password !!
+                    </div>
+                </div>
+                <br>
+
+                <!-- for  Gender (radiobutton) -->
+                <label for="">Gender :</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" required value="Male" #gender="ngModel"
+                        [(ngModel)]="std.gender" name="gender" id="" ngModel>
+                    <label for="">Male</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" required value="Female" #gender="ngModel"
+                        [(ngModel)]="std.gender" name="gender" id="" ngModel>
+                    <label for="">Female</label>
+                </div>
+                <br />
+
+                <!-- for  working with dropdownlist -->
+                <div class="form-group">
+                    <label for="">Country</label>
+                    <select name="country" class="form-control" required #country="ngModel"
+                        [class.is-invalid]="country.touched && country.invalid" [(ngModel)]="std.country" ngModel>
+                        <option value="" selected>Select</option>
+                        <option value="USA">USA</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Canada">Canada</option>
+                    </select>
+                </div>
+                <div class="alert alert-danger" *ngIf="country.touched && country.invalid">
+                    <div *ngIf="country.errors && country.errors['required']">
+                        Country is Required!
+                    </div>
+                </div>
+                <br>
+                <br>
+
+                    <!-- for working with single checkbox -->
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" required name="accept" #accept="ngModel"
+                        [(ngModel)]="std.accept" ngModel>
+                    <label for="">I accept Terms and Conditions</label>
+                </div>
+                <br>
+
+                    <!-- for  working with multiple checkboxes -->
+                <label for="">Select Hobbies:</label>
+                <div class="form-check">
+                    <input type="checkbox" (change)="onChange($event)" class="form-check-input" name="hobbies" value="Singing" ngModel>
+                    <label for="">Singing</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" (change)="onChange($event)" class="form-check-input" name="hobbies" value="Dancing" ngModel>
+                    <label for="">Dancing</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" (change)="onChange($event)" class="form-check-input" name="hobbies" value="Reading" ngModel>
+                    <label for="">Reading</label>
+                </div>
+                
+                    <!-- for  submit the form -->
+                <div class="d-grid">
+                    <input type="submit" [class.disabled]="newForm.form.invalid || SelectedHobbies.length==0" value="Submit" class="btn btn-primary">
+                <br>
+                    <!-- for  reset the form -->
+                <button type="button" class="btn btn-danger" (click)="resetForm(newForm)">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
