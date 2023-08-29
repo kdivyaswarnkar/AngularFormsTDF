@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TdfComponent } from './tdf/tdf.component';
 import { FormsModule } from '@angular/forms';
+import { ChangeMeDirective } from './shared/change-me.directive';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TdfComponent
+    TdfComponent,
+    ChangeMeDirective
   ],
   imports: [
     BrowserModule,
